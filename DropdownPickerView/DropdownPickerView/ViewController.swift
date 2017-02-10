@@ -19,12 +19,6 @@ class ViewController: UIViewController {
             return NSLocale(localeIdentifier: "en_US").displayName(forKey: NSLocale.Key.identifier, value: id) ?? "Country not found for code: \(code)"
         }
         pickerView.dataSource = countries
-        pickerView.selectItem(at: 10, animated: true)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 
