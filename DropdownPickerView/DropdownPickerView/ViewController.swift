@@ -10,9 +10,16 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet var pickerView: DropdownPickerView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let countries = NSLocale.isoCountryCodes.map { (code:String) -> String in
+            let id = NSLocale.localeIdentifier(fromComponents: [NSLocale.Key.countryCode.rawValue: code])
+            return NSLocale(localeIdentifier: "en_US").displayName(forKey: NSLocale.Key.identifier, value: id) ?? "Country not found for code: \(code)"
+        }
+        pickerView.dataSource = countries
+        pickerView.selectItem(at: 10, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
