@@ -55,6 +55,7 @@ class DropdownPickerView: UIView {
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.tableFooterView = UIView()
     }
     
@@ -137,6 +138,7 @@ extension DropdownPickerView:UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.pickerView(pickerView: self, didSelectAt: indexPath.row, withValue: dataSource[indexPath.row])
         selectedValue = dataSource[indexPath.row]
+        hidePicker()
     }
 }
 
