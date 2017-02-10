@@ -7,11 +7,11 @@
 //
 
 import UIKit
-@objc protocol DropdownPickerViewDelegate {
-    @objc optional
-    func pickerView(didOpen pickerView:DropdownPickerView)
-    func pickerView(didClose pickerView:DropdownPickerView)
-    func pickerView(pickerView:DropdownPickerView,didSelectAt index:NSInteger,withValue value:String)
+
+@objc protocol DropdownPickerViewDelegate:class {
+    @objc optional func pickerView(didOpen pickerView:DropdownPickerView)
+    @objc optional func pickerView(didClose pickerView:DropdownPickerView)
+    @objc optional func pickerView(pickerView:DropdownPickerView,didSelectAt index:NSInteger,withValue value:String)
 }
 
 class DropdownPickerView: UIView {
@@ -104,12 +104,14 @@ class DropdownPickerView: UIView {
         contentSize.height = contentSize.height + expandableHeight
         invalidateIntrinsicContentSize()
         isOpen = true
+        delegate?.pickerView?(didOpen: self)
     }
     
     func hidePicker(){
         contentSize.height = contentSize.height - expandableHeight
         invalidateIntrinsicContentSize()
         isOpen = false
+        delegate?.pickerView?(didClose: self)
     }
     
     func selectItem(at index:NSInteger, animated: Bool){
@@ -136,7 +138,7 @@ extension DropdownPickerView:UITableViewDataSource{
 
 extension DropdownPickerView:UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.pickerView(pickerView: self, didSelectAt: indexPath.row, withValue: dataSource[indexPath.row])
+        delegate?.pickerView?(pickerView: self, didSelectAt: indexPath.row, withValue: dataSource[indexPath.row])
         selectedValue = dataSource[indexPath.row]
         hidePicker()
     }
